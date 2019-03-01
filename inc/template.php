@@ -39,7 +39,7 @@
 
     <header class="bg-primary text-white">
       <div class="container text-center">
-        <h1>Alikacja PHP</h1>
+        <h1>Aplikacja PHP</h1>
         <p class="lead">Moja pierwsza aplikacja w PHP</p>
       </div>
     </header>
@@ -48,7 +48,8 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto">
-            <?php 
+            <?php
+                get_koms();
                 get_page_content($id);
             ?>
           </div>

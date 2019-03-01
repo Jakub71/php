@@ -22,4 +22,10 @@ function get_page_content($id) {
     else
         echo '<p>Brak takiej strony!</p>';
 }
+
+function get_koms() {
+    global $kom;
+    //foreach ($tb as $k) echo '<p>'.$k.'</p>'; 
+    foreach ($kom as $k) echo '<p class="lead"+>'.$k.'</p>';       
+}
 ?>
