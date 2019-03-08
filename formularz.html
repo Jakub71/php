@@ -1,0 +1,22 @@
+<p>Wypełnij formularz:</p>
+<?php
+    print_r($_GET);
+    print_r($_POST);
+    
+?>
+<form>
+    <div class="form-group">
+     <label for="login">Login:</label>
+     <input type="text" name="login" id="login">
+    </div>
+    <div class="form-group">
+     <label for="haslo">Hasło:</label>
+     <input type="password" name="password" id="password">
+    </div>
+    <div class="form-group">
+     <label for="email">Email:</label>
+     <input type="email" name="email" id="email">
+    </div>
+
+    <input type="submit" name="zapisz" value="Zapisz" class="btn btn-primary">
+</form>

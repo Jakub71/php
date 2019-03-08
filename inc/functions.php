@@ -1,4 +1,5 @@
 <?php
+
 $pages = array(
     'witam' => 'Witamy',
     'baza' => 'Baza',
@@ -25,7 +26,7 @@ function get_page_content($id) {
 
 function get_koms() {
     global $kom;
-    //foreach ($tb as $k) echo '<p>'.$k.'</p>'; 
-    foreach ($kom as $k) echo '<p class="lead"+>'.$k.'</p>';       
+    // foreach ($tb as $k) echo '<p>'.$k.'</p>';
+    foreach ($kom as $k) echo '<p class="lead">'.$k.'</p>';
 }
 ?>
