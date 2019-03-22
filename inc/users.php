@@ -17,21 +17,23 @@ class User {
 	function __construct() {
 		$this->remCookieDomain = $this->remCookieDomain == '' ? $_SERVER['HTTP_HOST'] : $this->remCookieDomain;
 		if (!isset($_SESSION)) session_start(); // rozpoczęcie sesji
-		return;
+
 		if (!empty($_SESSION[$this->uVal]))
 			$this->is_user($_SESSION[$this->uVal]);
 		if (isset($_COOKIE[$this->remCookieName]) && !$this->uid) {
 			$u = unserialize(base64_decode($_COOKIE[$this->remCookieName]));
 			$this->login($u['login'], $u['haslo'], false, true);
 		}
-		if (!$this->uid && isset($_POST['loguj'])){
-            $n = clrtxt($_POST['login']);
-            $h = clrtxt($_POST['haslo']);
-            $this->login($n, $h, true, true);
-        }
+
+		if (!$this->uid && isset($_POST['loguj'])) {
+			$n = clrtxt($_POST['login']);
+			$h = clrtxt($_POST['haslo']);
+			$this->login($n, $h, true, true);
+		}
+
+		if (isset($_GET['unlog'])) $this->logout();
+
 	}
-    
-    if (isset($_GET['unlog'])) $this->logout();
 
 	function login($login, $haslo, $remember=false, $loadUser=true) {
 		$login = rescape($login);
@@ -48,21 +50,21 @@ class User {
 		return false;
 	}
 
-    function logout($redirectTo = '') {
-        setcookie($this->remCookieName,'', time()-($this->remTime*3),'/',$this->remCookieDomain,false,true);
-        $this->dane=array();
-        $_SESSION = array();
-        if (ini_get("session.use_cookies")) {
-        $params = session_get_cookie_params();
-        setcookie(session_name(),'',time()-($this->remTime*3),$params["path"], $params["domain"],$params["secure"],$params["httponly"]);
-        }
-        if (session_destroy()) $this->kom[]='Zostałeś wylogowany.';
-        if ($redirectTo != '' && !headers_sent()) {//ewentualne przekierowanie
-            header('Location: '.$redirectTo);
-            exit;//To ensure security
+	function logout($redirectTo = '') {
+		setcookie($this->remCookieName,'', time()-($this->remTime*3),'/',$this->remCookieDomain,false,true);
+		$this->dane=array();
+		$_SESSION = array();
+		if (ini_get("session.use_cookies")) {
+    		$params = session_get_cookie_params();
+    		setcookie(session_name(),'',time()-($this->remTime*3),$params["path"], $params["domain"],$params["secure"],$params["httponly"]);
 		}
-    }
-    
+		if (session_destroy()) $this->kom[]='Zostałeś wylogowany.';
+		if ($redirectTo != '' && !headers_sent()) {//ewentualne przekierowanie
+			header('Location: '.$redirectTo);
+			exit;//To ensure security
+		}
+	}
+
 	function is_user($sid,$login=NULL,$haslo=NULL) {
 		if (!empty($login)) {
 			$qstr='SELECT * FROM users WHERE login = \''.$login.'\' AND haslo = \''.sha1($haslo).'\' LIMIT 1';
@@ -77,19 +79,19 @@ class User {
 		}
 		return false;
 	}
-    
-    function savtb() {//tab. asocjacyjna z kluczami: uid#nick#haslo#email#datad
+
+  function savtb() {//tab. asocjacyjna z kluczami: uid#nick#haslo#email#datad
 		if (strlen($this->haslo)<40) $this->haslo=sha1($this->haslo);
 		$this->llog=time();
 		if (!$this->uid) {
-			$qstr='INSERT INTO users VALUES (NULL,\''.$this->nick.'\',\''.$this->haslo.'\',\''.$this->email.'\',time())';
+			$qstr='INSERT INTO users VALUES (NULL,\''.$this->login.'\',\''.$this->haslo.'\',\''.$this->email.'\',time())';
 			$ret=db_exec($qstr);
 			$uid = db_lastInsertID();
 		}
 		if ($ret) return true;
-		return false; 
-    }
-    
+		return false;
+	}
+
 	function __set($k, $v) {
 		$this->dane[$k] = $v;
 	}
@@ -100,19 +102,24 @@ class User {
 		else
 			return null;
 	}
-    
-    function is_login($login) {
-        $qstr='SELECT id FROM users WHERE login=\''.$login.'\' LIMIT 1';
-        if (db_query($qstr)) return true;
-          return false;  
-          
-        }  
-        
-    function is_email($email){
-        $qstr='SELECT id FROM users WHERE email=\''.$email.'\' LIMIT 1';
-        if (db_query($qstr)) return true;
-          return false;
-    }
+
+	function is_login($login) {
+		$qstr='SELECT id FROM users WHERE login=\''.$login.'\' LIMIT 1';
+    if (db_query($qstr)) return true;
+    return false;
+	}
+
+	function is_email($email) {
+		$qstr='SELECT id FROM users WHERE email=\''.$email.'\' LIMIT 1';
+    if (db_query($qstr)) return true;
+    return false;
+	}
+
+	function get_koms() {
+    foreach ($this->kom as $k) echo '<p class="lead">'.$k.'</p>';
+    $this->kom = array();
+	}
+
 }
 
 ?>

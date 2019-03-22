@@ -23,6 +23,8 @@ $user = new User(); // tworzenie obiektu użytkownika
 if (isset($_GET['id'])) $id=$_GET['id']; else $id='witam';
 
 include_once(DINC.'template.php');
-# print_r($_SERVER);
+
+print_r($user->dane);
+print("<br>");
 print_r($_SESSION);
 ?>
