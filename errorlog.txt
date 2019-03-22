@@ -1,0 +1,4 @@
+[08-Mar-2019 09:44:41 Europe/Warsaw] PHP Notice:  Undefined variable: tytul in /home/lo1sand/public_html/kl2ag1/inc/template.php on line 10
+[08-Mar-2019 09:44:45 Europe/Warsaw] PHP Notice:  Undefined variable: tytul in /home/lo1sand/public_html/kl2ag1/inc/template.php on line 10
+[08-Mar-2019 09:47:07 Europe/Warsaw] PHP Notice:  Undefined variable: tytul in /home/lo1sand/public_html/kl2ag1/inc/template.php on line 10
+[08-Mar-2019 09:47:21 Europe/Warsaw] PHP Notice:  Undefined variable: tytul in /home/lo1sand/public_html/kl2ag1/inc/template.php on line 10

@@ -30,10 +30,10 @@ function get_koms() {
     foreach ($kom as $k) echo '<p class="lead">'.$k.'</p>';
 }
 
-function clrtxt(&$el, $maxdl=30){
+function clrtxt(&$el, $maxdl=30) {
     if (is_array($el)) {
         return array_map('clrtxt', $el);
-    } else{
+    } else {
         $el = trim($el);
         $el = substr($el, 0, $maxdl);
         if (get_magic_quotes_gpc()) $el = stripslashes($el);
