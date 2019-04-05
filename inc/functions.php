@@ -6,6 +6,14 @@ $pages = array(
     'formularz' => 'Formularz'
 );
 
+function get_page_title($id) {
+    global $pages;
+    if (array_key_exists($id, $pages))
+        echo $pages[$id];
+    else
+        echo 'Aplikacja w PHP';
+}
+
 function get_menu($id) {
     global $pages, $user;
     foreach ($pages as $p => $t) {

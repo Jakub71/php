@@ -10,7 +10,7 @@ class User {
 	var $remTime = 7200; // 2 godz.
 	var $remCookieDomain = '';
 	var $remCookieName = 'sqlDB';
-	var $keys = array('uid', 'login', 'haslo', 'email', 'datad');
+	var $keys = array('id', 'login', 'haslo', 'email', 'datad');
 	var $dane = array();
 	var $kom = array();
 
@@ -20,12 +20,12 @@ class User {
 
 		if (!empty($_SESSION[$this->uVal]))
 			$this->is_user($_SESSION[$this->uVal]);
-		if (isset($_COOKIE[$this->remCookieName]) && !$this->uid) {
+		if (isset($_COOKIE[$this->remCookieName]) && !$this->id) {
 			$u = unserialize(base64_decode($_COOKIE[$this->remCookieName]));
 			$this->login($u['login'], $u['haslo'], false, true);
 		}
 
-		if (!$this->uid && isset($_POST['loguj'])) {
+		if (!$this->id && isset($_POST['loguj'])) {
 			$n = clrtxt($_POST['login']);
 			$h = clrtxt($_POST['haslo']);
 			$this->login($n, $h, true, true);
@@ -43,11 +43,16 @@ class User {
 			  $cookie = base64_encode(serialize(array('login'=>$login,'haslo'=>$haslo,'czas'=>time())));
 			  $a = setcookie($this->remCookieName,$cookie,time()+$this->remTime,'/',$this->remCookieDomain,false,true);
 			}
+		}
+            
+		
+		if ($remember) {
 			$this->kom[]='Witaj '.$login.'! Zostałeś zalogowany.';
 			return true;
 		}
-		$this->kom[]='<b>Błędny login lub hasło!</b>';
-		return false;
+        
+        $this->kom[]='<b>Błędny login lub hasło!</b>';
+        return false;
 	}
 
 	function logout($redirectTo = '') {
@@ -73,20 +78,20 @@ class User {
 		db_query($qstr,$ret);
 		if (!empty($ret[0])) {
 			$this->dane=array_merge($this->dane,$ret[0]);
-			$sid=sha1($this->uid.$this->login.session_id());
+			$sid=sha1($this->id.$this->login.session_id());
 			$_SESSION[$this->uVal] = $sid; // zapis identyfikatora sesji
 			return true;
 		}
 		return false;
 	}
 
-  function savtb() {//tab. asocjacyjna z kluczami: uid#nick#haslo#email#datad
+  function savtb() {//tab. asocjacyjna z kluczami: id#nick#haslo#email#datad
 		if (strlen($this->haslo)<40) $this->haslo=sha1($this->haslo);
 		$this->llog=time();
-		if (!$this->uid) {
+		if (!$this->id) {
 			$qstr='INSERT INTO users VALUES (NULL,\''.$this->login.'\',\''.$this->haslo.'\',\''.$this->email.'\',time())';
 			$ret=db_exec($qstr);
-			$uid = db_lastInsertID();
+			$id = db_lastInsertID();
 		}
 		if ($ret) return true;
 		return false;

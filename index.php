@@ -15,7 +15,7 @@ require_once(DINC.'db.php');
 $kom=array();
 
 init_baza(DBASE.$dbfile);
-# db_exec($qstr);
+init_tables();
 
 require_once(DINC.'users.php');
 $user = new User(); // tworzenie obiektu użytkownika
@@ -23,8 +23,4 @@ $user = new User(); // tworzenie obiektu użytkownika
 if (isset($_GET['id'])) $id=$_GET['id']; else $id='witam';
 
 include_once(DINC.'template.php');
-
-print_r($user->dane);
-print("<br>");
-print_r($_SESSION);
 ?>
