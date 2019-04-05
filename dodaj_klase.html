@@ -15,10 +15,10 @@
         $klasa = new klasa($nazwa, $roknaboru, $rokmatury);
         if($klasa->isValid() ){
             $klasa->save();
-            $kom[]='Zapisano klasę';
+            $kom[]='Dodano klasę';
             get_kom();
         }else{
-            $kom[]='Taka klasa istnieje lub wprowadzono niepoprawne dane';
+            $kom[]='Ta klasa istnieje lub wprowadzono niepoprawne dane';
             get_kom();
     
         }
@@ -32,11 +32,11 @@
   </div>
   <div class="form-group">
     <label for="roknaboru">Rok naboru:</label>
-    <input type="roknaboru" name="roknaboru" id="roknabory" maxlength="10" required>
+    <input type="text" name="roknaboru" id="roknabory" maxlength="10" required>
   </div>
   <div class="form-group">
     <label for="rokmatury">Rok matury:</label>
-    <input type="rokmatury" name="rokmatury" id="rokmatury" maxlength="10" required>
+    <input type="text" name="rokmatury" id="rokmatury" maxlength="10" required>
   </div>
 
   <input type="submit" name="zapisz" value="Zapisz" class="btn btn-primary">

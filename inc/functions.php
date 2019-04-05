@@ -4,7 +4,7 @@ $pages = array(
     'witam' => 'Witamy',
     'baza' => 'Baza',
     'formularz' => 'Formularz',
-    'klasy'=>'Klasy'
+    'dodaj_klase'=>'Klasy'
 );
 
 function get_page_title($id) {
@@ -28,12 +28,13 @@ function get_menu($id) {
             <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="?id=wyloguj">Wyloguj</a>
             </li>';
+            
     } else {
         echo '
             <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="?id=login">Zaloguj się</a>
             </li>';
-    }
+    } 
 }
 
 function get_page_content($id) {
