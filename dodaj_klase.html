@@ -1,4 +1,9 @@
 <?php
+    global $user;
+    if (!$user->id)
+    print_r($_POST);
+    
+    
     if (isset($_POST['nazwa'])) {
         foreach ($_POST as $k => $v) {
             ${$k} = clrtxt($v);
